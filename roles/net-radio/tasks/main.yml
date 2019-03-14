@@ -1,0 +1,16 @@
+- name: added in 2.4, previouslly you used 'include'
+  import_tasks: redhat.yml
+  when: ansible_os_platform|lower == 'redhat'
+  import_tasks: debian.yml
+  when: ansible_os_platform|lower == 'debian'
+
+-name: create server, music, control, scripts directory
+
+-name: prerequisites for lame
+
+-name: compile, install lame
+
+-name: chown and populate server, scripts,control directory
+
+-name: set start-up
+

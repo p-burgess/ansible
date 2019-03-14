@@ -1,0 +1,49 @@
+---
+- hosts: local
+  remote_user: root
+  become: yes
+  vars:
+        env:
+         RUNLEVEL: "1"
+
+        ntp_driftfile: "/var/lib/ntp/drift"
+        ntp_server: [0.uk.pool.ntp.org, 1.uk.pool.ntp.org, 2.uk.pool.ntp.org, 3.uk.pool.ntp.org]
+        ntp_restrict:
+          - "restrict default nomodify notrap nopeer noquery"
+          - "restrict 127.0.0.1"
+        ntp_crypto: no
+        ntp_includefile: "/etc/ntp/crypto/pw"
+        ntp_keys: "/etc/ntp/keys"
+        ntp_trustedkey: "4 8 42"
+        ntp_requestkey: "8"
+        ntp_controlkey: no
+        ntp_statistics: no
+        ntp_broadcast: no 
+        ntp_broadcastclient: no         
+        ntp_multicastclient: no
+        ntp_disable_monitor: no
+ 
+  tasks:
+        - name: Add the OS specific varibles
+          include_vars: "{{ ansible_os_family }}.yml"
+
+        - name: Install the required  packages in Redhat derivatives
+          yum: name={{ item }} state=installed
+          with_items: '{{ ntp_pkgs }}'
+          when: ansible_os_family == 'RedHat'
+
+        - name: Install the required packages in Debian derivatives
+          apt: name={{ item }} state=installed update_cache=yes
+          with_items: '{{ ntp_pkgs }}'
+          environment: env
+          when: ansible_os_family == 'Debian'
+
+        - name: Copy the ntp.conf template file
+          template: src=ntp.conf.j2 dest=/etc/ntp.conf
+          notify: 
+            - restart ntp
+
+  handlers:
+        - name: restart ntp
+          service: name={{ ntp_svc_name }} state=restarted enabled=yes
+...

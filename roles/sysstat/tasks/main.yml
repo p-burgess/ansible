@@ -1,0 +1,46 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Update apt cache | Debian
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+  when: ansible_os_family == 'Debian'
+  become: yes  
+
+- name: Install sysstat package | Debian
+  apt:
+    name: '{{ sysstat_package }}'
+    state: present
+  when: ansible_os_family == 'Debian'
+  become: yes
+  
+- name: Install sysstat package | RedHat
+  #  shell:
+  #    yum install '{{ sysstat_package }}'
+  yum:
+    name: '{{ sysstat_package }}'
+    state: present
+  when: ansible_os_family == 'RedHat'
+  become: yes
+
+- name: Configure sysstat
+  template:
+    src: 'sysstat.config.j2'
+    dest: '{{ sysstat_config }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0640'
+  become: yes
+
+# Normally I would use the cron module instead of templating, but to make this cross platform
+# templating seems the best choice. The only downside is to have to restart the cron service.
+#- name: Configure sysstat cron
+#  template:
+#    src: 'sysstat.cron.j2'
+#    dest: '/etc/cron.d/sysstat'
+#    owner: 'root'
+#    group: 'root'
+#    mode: '0640'
+#  notify: Restart cron

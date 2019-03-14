@@ -1,0 +1,5 @@
+---
+ntp_pkgs:
+  - ntp
+
+ntp_svc_name: ntp

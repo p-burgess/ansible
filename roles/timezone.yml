@@ -1,0 +1,8 @@
+---
+- hosts: aws
+  roles:
+  - timezone-master
+
+  vars:
+   timezone: America/Boise
+
