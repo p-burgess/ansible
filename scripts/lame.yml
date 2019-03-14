@@ -1,0 +1,6 @@
+- hosts: loocalhost
+#   tasks:
+ 
+    - debug:
+       msg: Install lame encoder
+
