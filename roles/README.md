@@ -1,3 +1,5 @@
-working:
+working:  ntp
+          wake
+          
 
-not-yet:
+not-yet:  mpich
