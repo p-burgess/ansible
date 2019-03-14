@@ -1,0 +1,20 @@
+---
+# tasks file for mpich
+
+- name: install required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - gcc
+    - gcc-gfortran
+    - gcc-c++
+
+- name: check if already installed
+  stat: path={{ mpich_prefix }}/lib
+# stat stores the file attrobutes 
+  register: mpich_lib_dir
+# register stores the result of path=
+  changed_when: mpich_lib_dir.stat.exists == False
+# only reports changed when mpich not installed
+
+- include_tasks: install.yml
+  when: mpich_lib_dir.stat.exists == False

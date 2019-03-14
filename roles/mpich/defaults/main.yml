@@ -1,0 +1,12 @@
+---
+# defaults file for mpich
+
+mpich_version: 3.2.1
+mpich_url: http://www.mpich.org/static/downloads/{{ mpich_version }}/mpich-{{ mpich_version }}.tar.gz
+
+# this is the parent folder of the mpich installation
+# (CentOS 6.7)
+# mpich_prefix: /opt/mpich/{{ mpich_version }} 
+# (CentOS 7.0)
+mpich_prefix: /usr/lib64/mpich/ 
+
