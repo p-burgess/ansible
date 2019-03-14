@@ -1,0 +1,6 @@
+---
+#- name: restart Slackware ntp
+#  command: /etc/rc.d/rc.ntpd restart
+#
+#- name: restart ntp
+#  service: name={{ ntp_svc_name }} state=restarted enabled=yes

@@ -1,0 +1,26 @@
+- name: Send a magic Wake-on-LAN packet 
+  wakeonlan:
+    mac: 00:22:64:68:57:B7
+    port: 9
+  delegate_to: localhost
+
+- wakeonlan:
+    mac: 70:5A:B6:9B:FB:57
+    port: 9
+  delegate_to: localhost
+
+- wakeonlan:
+    mac: 70:5A:B6:9B:FB:6C
+    port: 9
+  delegate_to: localhost
+
+- wakeonlan:
+    mac: 98:4B:E1:A7:F9:40
+    port: 9
+  delegate_to: localhost
+
+- wakeonlan:
+    mac: 64:31:50:5E:19:87
+    broadcast: 192.168.0.105
+    port: 9
+  delegate_to: localhost
