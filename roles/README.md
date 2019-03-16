@@ -1,8 +1,9 @@
-working:  ntp,
+##working:
+          ntp,
           wake,
           netradio,
           timezone
           
-
-not-yet:  mpich,
+##not-yet:
+          mpich,
           sysstat
