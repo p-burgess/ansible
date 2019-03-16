@@ -5,7 +5,7 @@ working:
           netradio,
           timezone
           
-##not-yet:
-----------
+not-yet:
+--------
           mpich,
           sysstat
