@@ -1,0 +1,21 @@
+---
+yum_user: yum
+yum_pkgs:
+  - createrepo
+  - nginx
+  - yum-utils
+yum_source:
+  - name: base
+    description: CentOS-7 Base
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
+  - name: extras
+    description: CentOS-7 Base
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
+  - name: updates
+    description: CentOS-7 Updates
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra
+  - name: epel
+    description: EPEL YUM repo
+    mirrorlist: https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+
+...
