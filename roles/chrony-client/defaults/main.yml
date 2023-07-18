@@ -1,0 +1,15 @@
+---
+
+chrony_driftfile: /var/lib/chrony/drift
+chrony_server: [192.168.0.117]
+chrony_minsources: 1
+#chrony_hwtimestamp: *
+chrony_stratum: 10
+chrony_keyfile: /etc/chrony.keys
+chrony_logdir: /var/log/chrony
+chrony_log: 
+  - measurements
+  - statistics
+  - tracking
+chrony_makestep: 1.0 3
+...

@@ -1,0 +1,5 @@
+---
+chrony_pkgs:
+  - chrony
+
+ntp_svc_name: chronyd

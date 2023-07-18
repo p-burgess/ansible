@@ -1,0 +1,44 @@
+#{{ ansible_managed }}
+
+driftfile {{ chrony_driftfile }}
+{% for i in chrony_server %}
+server {{ i }}
+{% endfor %}
+
+{% if chrony_minsources %}
+minsources {{chrony_minsources}}
+{% endif %}
+
+{#
+    {% if chrony_hwtimestamp %}
+    hwtimestamp  {{ chrony_hwtimestamp }}
+    {% endif %}
+#}
+
+{% if chrony_log %}
+log {{ chrony_log|join(' ') }}
+{% endif %}
+
+{% if chrony_stratum %}
+local stratum {{ chrony_stratum }}
+{% endif %}
+
+{% if chrony_clientnetworks|length > 0 %}
+{%   for cidr in chrony_clientnetworks %}
+allow {{ cidr }}
+{%   endfor %}
+{% endif %}
+
+{% if  chrony_keyfile %}
+keyfile  {{  chrony_keyfile }}
+{% endif %}
+
+{% if chrony_logdir %}
+logdir {{ chrony_logdir }}
+{% endif %}
+
+log {{ chrony_log | join(" ") }}
+
+{% if chrony_makestep %}
+makestep  {{ chrony_makestep }}
+{% endif %}

@@ -1,0 +1,16 @@
+---
+
+chrony_driftfile: /var/lib/chrony/drift
+chrony_server: [0.centos.pool.ntp.org iburst, 1.centos.pool.ntp.org iburst, 2.centos.pool.ntp.org iburst, 3.centos.pool.ntp.org iburst]
+chrony_minsources: 2
+#chrony_hwtimestamp: *
+chrony_clientnetworks: [192.168/16,10/8]
+chrony_stratum: 10
+chrony_keyfile: /etc/chrony.keys
+chrony_logdir: /var/log/chrony
+chrony_log: 
+  - measurements
+  - statistics
+  - tracking
+chrony_makestep: 1.0 3
+...

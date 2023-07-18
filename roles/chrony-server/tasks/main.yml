@@ -1,0 +1,14 @@
+---
+
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Install the required  packages in Redhat derivatives
+  yum: name={{ chrony_pkgs }} state=installed
+  when: ansible_os_family == 'CentOS'
+
+- name: Copy the chrony.conf template file
+  template: src=chrony.conf.j2 dest=/etc/chrony.conf
+  notify: 
+    - restart chronyd
+...
