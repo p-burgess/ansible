@@ -1,5 +1,0 @@
----
-#ntp_pkgs: ntp-4.2.8p8-x86_64-1.tgz
-#ntp_driftfile: /etc/ntp/drift
-
-
