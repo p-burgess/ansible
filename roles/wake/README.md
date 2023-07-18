@@ -23,13 +23,6 @@ Examples
 	  roles:
 	    - role: magic
 
-#2) Install ntp and set some custom servers.
-#
-#	- hosts: all
-#	  roles:
-#	    - role: ntp
-#	      ntp_server: [2.ubuntu.pool.ntp.org, 1.ubuntu.pool.ntp.org]
-
 Dependencies
 ------------
 
