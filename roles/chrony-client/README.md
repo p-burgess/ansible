@@ -53,19 +53,18 @@ them are as follows. See the NTP configuration documentation for details:
 Examples
 --------
 
-1) Install ntp and set the default settings.
+1) Install chrony as LAN ntp server.
 
-	- hosts: all
+	- hosts: master
 	  roles:
-	    - role: chrony
+	    - role: chrony-server
 
 2) Install ntp and set some custom servers.
 
-	- hosts: all
+	- hosts: clients
 	  roles:
-	    - role: chrony
-	      chrony_server: [0.centos.pool.ntp.org iburst, 1.centos.pool.ntp.org iburst, 2.centos.pool.ntp.org iburst, 3.centos.pool.ntp.org iburst, 0.uk.pool.ntp.org, 1.uk.pool.ntp.org, 2.uk.pool.ntp.org, 3.uk.pool.ntp.org]
-
+	    - role: chrony-client
+	      
 Dependencies
 ------------
 
