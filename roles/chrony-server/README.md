@@ -50,21 +50,14 @@ them are as follows. See the NTP configuration documentation for details:
     chrony_stepoffset: 1.0
     chrony_stepupdate: 3
 
-Examples
+Example
 --------
 
-1) Install ntp and set the default settings.
+Install ntp and set custom server.
 
-	- hosts: all
+	- hosts: clients
 	  roles:
-	    - role: chrony
-
-2) Install ntp and set some custom servers.
-
-	- hosts: all
-	  roles:
-	    - role: chrony
-	      chrony_server: [0.centos.pool.ntp.org iburst, 1.centos.pool.ntp.org iburst, 2.centos.pool.ntp.org iburst, 3.centos.pool.ntp.org iburst, 0.uk.pool.ntp.org, 1.uk.pool.ntp.org, 2.uk.pool.ntp.org, 3.uk.pool.ntp.org]
+	    - role: chrony-client
 
 Dependencies
 ------------
