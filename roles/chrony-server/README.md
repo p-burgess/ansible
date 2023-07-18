@@ -1,7 +1,7 @@
 ntp
 ===
 
-This role enables users to install and configure ntp on their hosts.
+This role enables users to install chrony to serve time on a LAN.
 
 Requirements
 ------------
@@ -55,10 +55,10 @@ Example
 
 Install ntp and set custom server.
 
-	- hosts: clients
+	- hosts: master
 	  roles:
-	    - role: chrony-client
-
+	    - role: chrony-server
+     
 Dependencies
 ------------
 
