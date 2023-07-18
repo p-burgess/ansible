@@ -53,13 +53,7 @@ them are as follows. See the NTP configuration documentation for details:
 Examples
 --------
 
-1) Install chrony as LAN ntp server.
-
-	- hosts: master
-	  roles:
-	    - role: chrony-server
-
-2) Install ntp and set some custom servers.
+Install ntp and set some custom servers.
 
 	- hosts: clients
 	  roles:
