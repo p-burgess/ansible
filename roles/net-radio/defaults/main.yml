@@ -1,9 +1,9 @@
-adminpassword=Abrighterday1
-password=moduation
+adminpassword=Password
+password=Password
 requirestreamconfigs=1
-streamadminpassword=Abrighterday1
+streamadminpassword=Password
 streamid=1
-streampassword=moduation
+streampassword=mPassword
 streampath=http://127.0.0.1:8000
 logfile=/var/log/sc_serv.log
 banfile=/home/ec2-user/control/sc_serv.ban
