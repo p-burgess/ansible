@@ -1,0 +1,5 @@
+---
+
+- name: reload yum
+  command: yum clean expire-cache
+...
