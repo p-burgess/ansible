@@ -1,0 +1,37 @@
+---
+
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Install the required  packages in Redhat derivatives
+  yum: name={{ yum_pkgs }} state=installed
+  when: ansible_os_family == 'CentOS'
+
+- name: Create a backup confiuration directory
+  ansible.builtin.file:
+    path: "{{ backup_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Get the list of files to move
+  find:
+    paths: "{{ configuration_dir }}"
+    patterns: "*"
+    recurse: no
+  register: configuration_files
+
+- name: Move files
+  command: mv {{ item.path }} {{ backup_dir }}
+  with_items: "{{ configuration_files.files }}"
+
+- name: create repository files
+  ansible.builtin.template:
+    src: local.repo.j2
+    dest: "{{ configuration_dir }}{{ item.filename }}" 
+    owner: root
+    mode: 644
+#    backup: true
+  with_items: "{{ yum_repos }}"
+  notify: 
+    - Update system 
+...

@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: local repository server
+  author: "Paul Burgess"
+  company: enenet
+  license: BSD
+  min_ansible_version: 1.4
+  platforms:
+   - name: EL
+     versions:
+      - 7
+      - 8
+  galaxy_tags:
+    - system
+    - yum
+    - local_repository
+  categories:
+    - system
+    - networking
+
+...

@@ -1,0 +1,5 @@
+---
+configuration_dir: /etc/yum.repos.d/
+backup_dir: /etc/yum.repos.backup.d/
+
+...
