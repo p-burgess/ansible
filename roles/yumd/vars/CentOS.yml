@@ -20,4 +20,7 @@ yum_source:
   - name: ansible-29
     description: CentOS-7 Ansible
     mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=configmanagement-ansible-29
+  - name: epel-testing
+    description: EPEL-testing 
+    mirrorlist: https://mirrors.ukfast.co.uk/sites/dl.fedoraproject.org/pub/epel/testing/7/x86_64/
 ...
