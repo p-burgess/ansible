@@ -1,4 +1,4 @@
 ---
-- hosts: clients
+- hosts: yum-clients
   roles:
   - yum-client
