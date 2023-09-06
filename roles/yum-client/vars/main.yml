@@ -1,0 +1,39 @@
+---
+yum_repos:
+  - filename: centos-base.repo
+    name: base
+    baseurl: http://192.168.0.117/base
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1
+  - filename: centos-updates.repo
+    name: updates
+    baseurl: http://192.168.0.117/updates
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1
+  - filename: epel.repo
+    name: epel
+    baseurl: http://192.168.0.117/epel
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1
+  - filename: extras.repo
+    name: extras
+    baseurl: http://192.168.0.117/extras
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1
+  - filename: centos-ansible-29.repo
+    name: centos-ansible-29
+    baseurl: http://192.168.0.117/centos-ansible-29
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1 
+  - filename: epel-testing.repo
+    name: epel-testing
+    baseurl: http://192.168.0.117/centos-ansible-29
+    gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    gpgcheck: 0
+    enabled: 1  
+...
