@@ -1,5 +1,0 @@
----
-
-yum_dir: /home/{{ yum_user }}
-
-...
