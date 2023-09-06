@@ -17,5 +17,7 @@ yum_source:
   - name: epel
     description: EPEL YUM repo
     mirrorlist: https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
-
+  - name: ansible-29
+    description: CentOS-7 Ansible
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=configmanagement-ansible-29
 ...
