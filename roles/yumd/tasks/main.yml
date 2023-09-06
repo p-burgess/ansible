@@ -1,0 +1,93 @@
+---
+
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Install the required  packages in CentOS
+  yum: 
+    name: "{{ item }}"
+    state: present
+  become: True
+  loop: "{{ yum_pkgs }}"
+  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
+
+- name: install standard repositories using mirrorlist
+  yum_repository: 
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    mirrorlist: "{{ item.mirrorlist }}"
+    gpgcheck: False
+    enabled: yes
+  loop: "{{ yum_source }}"
+  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
+
+
+- name: enable repositories
+  shell: yum-config-manager --enable "{{ item.name }}"
+  become: yes
+  loop: "{{ yum_source }}" 
+
+- name: Create a user
+  user:
+    name: "{{ yum_user }}"
+    #password: ''
+    #groups: nginx-agent  # Empty by default.
+    state: present
+    shell: /bin/bash     # Defaults to /bin/bash
+    system: no           # Defaults to no
+    createhome: yes      # Defaults to yes
+    home: /home/yum      # Defaults to /home/<username>
+
+- name: create dirs for repos
+  file: 
+    path: /home/{{ yum_user }}/{{ item.name }}
+    owner: "{{ yum_user }}"
+    group: "{{ yum_user }}"
+    state: directory
+  loop: "{{ yum_source }}"
+
+##- name: Syncronize the repositories
+#  shell: reposync -q -n -d -p {{ yum_dir }} --repoid={{ item.name }} --download-metadata --downloadcomps
+#  become: yes
+#  loop: "{{ yum_source }}"
+
+##- name: Update the repository metadatas
+#  shell: createrepo {{ yum_dir }}/{{ item.name }}
+#  become: yes
+#  loop: "{{ yum_source }}"
+
+- name: set ownership on repo directory
+  file:
+    path: "{{ yum_dir }}"
+    recurse: true
+    owner: "{{ yum_user }}"
+    group: "{{ yum_user }}"
+
+- name: set ACL permissions on repo directory
+  acl:
+    path: "{{ yum_dir }}"
+    entity: "{{ yum_user }}"
+    etype: user
+    permissions: rwx
+    state: present
+
+- name: add cron job to sync repos weekly
+  cron:
+    name: "reposync {{ item.name }}"
+    special_time: "weekly"
+    job: "reposync -q -n -d -p {{ yum_dir }} --repoid={{ item }} --download-metadata --downloadcomps"
+  loop: "{{ yum_source }}"
+
+- name: configure nginx default site to run as yum user
+  template:
+    src: yum_nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: set SELinux to enforcing
+  selinux:
+    policy: targeted
+    state: disabled
+  notify: restart nginx
+
+...

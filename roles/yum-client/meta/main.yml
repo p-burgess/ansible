@@ -1,0 +1,22 @@
+---
+
+galaxy_info:
+  role_name: chrony client
+  author: "Paul Burgess"
+  company: enenet
+  license: BSD
+  min_ansible_version: 1.4
+#  platforms:
+#   - name: EL
+#     versions:
+#      - 7
+#      - 8
+  galaxy_tags:
+    - system
+    - time
+    - ntp
+    - chromy
+    - date
+#categories:
+#   - development
+...
