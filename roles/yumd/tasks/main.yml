@@ -3,13 +3,14 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_distribution }}.yml"
 
-- name: Install the required  packages in CentOS
-  yum: 
-    name: "{{ item }}"
-    state: present
-  become: True
-  loop: "{{ yum_pkgs }}"
-  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
+#  not sure where this belongs
+#- name: Install the required  packages in CentOS
+#  yum: 
+#    name: "{{ item }}"
+#    state: present
+#  become: True
+#  loop: "{{ yum_pkgs }}"
+#  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
 
 - name: install standard repositories using mirrorlist
   yum_repository: 
