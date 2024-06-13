@@ -5,20 +5,18 @@ yum_pkgs:
   - nginx
   - yum-utils
 yum_source:
-  - name: base
+  - name: baseos
     description: CentOS-7 Base
-    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
-  - name: extras
-    description: CentOS-7 Extras
-    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
-  - name: updates
-    description: CentOS-7 Updates
-    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra
+   # metalink=https://mirrors.centos.org/metalink?repo=centos-baseos-$stream&arch=$basearch&protocol=https,http
+  - name: appstream
+    description: CentOS-9 AppStream
+   # metalink=https://mirrors.centos.org/metalink?repo=centos-appstream-$stream&arch=$basearch&protocol=https,http
   - name: epel
-    description: Extra Packages for Enterprise Linux repo
-    mirrorlist: https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
-  - name: ansible-29
-    description: CentOS-7 Ansible
-    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=configmanagement-ansible-29
+    description: CentOS-9 EPEL
+  #  metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir
+  - name: extras-common
+    description: CentOS-9 extras
+   # metalink=https://mirrors.centos.org/metalink?repo=centos-extras-sig-extras-common-$stream&arch=$basearch&protocol=https,http
+  
 
 ...

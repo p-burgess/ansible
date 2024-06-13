@@ -3,30 +3,29 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_distribution }}.yml"
 
-#  not sure where this belongs
-#- name: Install the required  packages in CentOS
-#  yum: 
-#    name: "{{ item }}"
-#    state: present
-#  become: True
-#  loop: "{{ yum_pkgs }}"
+- name: Install the required  packages in CentOS
+  yum: 
+    name: "{{ item }}"
+    state: present
+  become: True
+  loop: "{{ yum_pkgs }}"
+  when: (ansible_facts['distribution'] == "CentOS")
+
+#- name: install standard repositories using mirrorlist
+#  yum_repository: 
+#    name: "{{ item.name }}"
+#    description: "{{ item.description }}"
+#    mirrorlist: "{{ item.mirrorlist }}"
+#    gpgcheck: False
+#    enabled: yes
+#  loop: "{{ yum_source }}"
 #  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
 
-- name: install standard repositories using mirrorlist
-  yum_repository: 
-    name: "{{ item.name }}"
-    description: "{{ item.description }}"
-    mirrorlist: "{{ item.mirrorlist }}"
-    gpgcheck: False
-    enabled: yes
-  loop: "{{ yum_source }}"
-  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
 
-
-- name: enable repositories
-  shell: yum-config-manager --enable "{{ item.name }}"
-  become: yes
-  loop: "{{ yum_source }}" 
+#- name: enable repositories
+#  shell: yum-config-manager --enable "{{ item.name }}"
+#  become: yes
+#  loop: "{{ yum_source }}" 
 
 - name: Create a user
   user:
@@ -45,10 +44,11 @@
     owner: "{{ yum_user }}"
     group: "{{ yum_user }}"
     state: directory
+    mode: '1755'
   loop: "{{ yum_source }}"
 
 - name: Syncronize the repositories
-  shell: reposync -q -n -d -p {{ yum_dir }} --repoid={{ item.name }} --download-metadata --downloadcomps
+  shell: dnf reposync -n -p {{ yum_dir }} --repoid={{ item.name }} --download-metadata --downloadcomps
   become: yes
   loop: "{{ yum_source }}"
 
@@ -78,6 +78,12 @@
     special_time: "weekly"
     job: "reposync -q -n -d -p {{ yum_dir }} --repoid={{ item }} --download-metadata --downloadcomps"
   loop: "{{ yum_source }}"
+
+- name: permit traffic in default zone for http service
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
 
 - name: configure nginx default site to run as yum user
   template:
