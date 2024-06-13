@@ -1,4 +1,4 @@
 ---
-- hosts: yum-master
+- hosts: master
   roles:
   - yumd

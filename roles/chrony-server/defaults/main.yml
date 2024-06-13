@@ -1,7 +1,7 @@
 ---
 
 chrony_driftfile: /var/lib/chrony/drift
-chrony_server: [0.centos.pool.ntp.org iburst, 1.centos.pool.ntp.org iburst, 2.centos.pool.ntp.org iburst, 3.centos.pool.ntp.org iburst]
+chrony_server: [time-a-g.nist.gov iburst, time-b-g.nist.gov iburst, time-c-g.nist.gov iburst, time-d-g.nist.gov iburst]
 chrony_minsources: 2
 #chrony_hwtimestamp: *
 chrony_clientnetworks: [192.168/16,10/8]
