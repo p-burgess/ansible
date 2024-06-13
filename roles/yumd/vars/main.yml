@@ -7,16 +7,11 @@ yum_pkgs:
 yum_source:
   - name: baseos
     description: CentOS-7 Base
-   # metalink=https://mirrors.centos.org/metalink?repo=centos-baseos-$stream&arch=$basearch&protocol=https,http
   - name: appstream
     description: CentOS-9 AppStream
-   # metalink=https://mirrors.centos.org/metalink?repo=centos-appstream-$stream&arch=$basearch&protocol=https,http
   - name: epel
     description: CentOS-9 EPEL
-  #  metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir
   - name: extras-common
-    description: CentOS-9 extras
-   # metalink=https://mirrors.centos.org/metalink?repo=centos-extras-sig-extras-common-$stream&arch=$basearch&protocol=https,http
-  
+    description: CentOS-9 extras  
 
 ...
