@@ -11,22 +11,6 @@
   loop: "{{ yum_pkgs }}"
   when: (ansible_facts['distribution'] == "CentOS")
 
-#- name: install standard repositories using mirrorlist
-#  yum_repository: 
-#    name: "{{ item.name }}"
-#    description: "{{ item.description }}"
-#    mirrorlist: "{{ item.mirrorlist }}"
-#    gpgcheck: False
-#    enabled: yes
-#  loop: "{{ yum_source }}"
-#  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
-
-
-#- name: enable repositories
-#  shell: yum-config-manager --enable "{{ item.name }}"
-#  become: yes
-#  loop: "{{ yum_source }}" 
-
 - name: Create a user
   user:
     name: "{{ yum_user }}"
