@@ -1,0 +1,8 @@
+---
+- hosts: rest
+  tasks:
+    - name: copy cephx configuration to rest
+      copy:
+        src: /home/user/ceph.mon.keyring
+        dest: /home/user/ceph.mon.keyring
+      become: no

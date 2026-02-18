@@ -1,0 +1,8 @@
+---
+- hosts: rest
+  tasks:
+    - name: copy ntp.conf to rest
+      copy:
+        src: /home/user/client.ntp.conf
+        dest: /etc/ntp.conf
+      become: yes

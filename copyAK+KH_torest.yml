@@ -1,0 +1,27 @@
+---
+- hosts: rest
+  tasks:
+    - name: copy user authorized_keys to rest
+      copy:
+        src: /home/user/user_authorized_keys
+        dest: /home/user/.ssh/authorized_keys
+        owner: user
+        group: user
+      become: yes
+    - name: copy user known_hosts to rest
+      copy:
+        src: /home/user/user_known_hosts
+        dest: /home/user/.ssh/known_hosts
+        owner: user
+        group: user
+      become: yes
+    - name: copy root authorized_keys to rest
+      copy:
+        src: /home/user/root_authorized_keys
+        dest: /root/.ssh/authorized_keys
+      become: yes
+    - name: copy root known_hosts to rest
+      copy:
+        src: /home/user/root_known_hosts
+        dest: /root/.ssh/known_hosts
+      become: yes

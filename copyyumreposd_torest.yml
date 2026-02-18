@@ -1,0 +1,8 @@
+---
+- hosts: c07
+  tasks:
+    - name: copy yum repos directory
+      copy:
+        src: /etc/yum.repos.d/
+        dest: /etc/yum.repos.d/
+      become: yes

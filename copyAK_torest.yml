@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: copy authorized_keys to all
+      copy:
+        src: /home/user/authorized_keys
+        dest: /home/user/.ssh/authorized_keys
+      become: no

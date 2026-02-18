@@ -1,0 +1,8 @@
+---
+- hosts: rest
+  tasks:
+    - name: copy ceph.conf to all
+      copy:
+        src: /home/user/ceph.conf
+        dest: /etc/ceph/
+      become: yes

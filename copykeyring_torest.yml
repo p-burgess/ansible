@@ -1,0 +1,9 @@
+---
+- hosts: c02
+  tasks:
+    - name: copy ceph.client.keyring to rest
+      copy:
+        src: /home/user/ceph-client.admin.keyring
+        dest: /home/user/
+        force: yes
+      become: yes

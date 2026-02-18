@@ -1,0 +1,8 @@
+---
+- hosts: centos9
+  tasks:
+    - name: copy yum local9.repo file to all
+      copy:
+        src: /home/user/local9.repo
+        dest: /etc/yum.repos.d/local9.repo
+      become: yes

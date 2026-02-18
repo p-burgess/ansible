@@ -1,0 +1,8 @@
+---
+- hosts: rest
+  tasks:
+    - name: copy repo file to rest
+      copy:
+        src: /etc/yum.repos.d/local.repos.client
+        dest: /etc/yum.repos.d/local.repo
+      become: yes
