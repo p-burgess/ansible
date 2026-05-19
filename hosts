@@ -1,0 +1,378 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+all:
+    children:
+        galera_all:
+            hosts:
+                c110:
+                    ansible_host: 192.168.1.110
+                    galera_server_id: 110
+                c111:
+                    ansible_host: 192.168.1.111
+                    galera_server_id: 111
+                c112:
+                    ansible_host: 192.168.1.112
+                    galera_server_id: 112
+                
+            vars:
+                ansible_become: yes
+                ansible_user: user
+        cluster_all:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+            
+    # 192.168.1.87  ansible_become=yes ansible_user=user
+
+        cluster:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+        spare:
+
+        rest:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+
+
+#           c109.enenet.co.uk:
+#                ansible_host: 192.168.2.109
+#                ansible_become: yes
+#                ansible_user: user
+#                galera_server_id: 109
+
+        centos10:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c111:
+                    ansible_host: 192.168.1.110
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+    
+        ntp_client:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+        
+        ntp_server:
+            hosts:
+                c111:
+                    ansible_host: 192.168.1.111
+                    ansible_become: yes
+                    ansible_user: user
+
+        chronyd_master:
+            hosts:
+                c111:
+                    ansible_host: 192.168.1.111
+                    ansible_become: yes
+                    ansible_user: user
+
+        mons:
+            hosts:
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+            vars:
+                ansible_become: yes
+                ansible_user: user
+# 192.168.0.106 ansible_become=yes ansible_user=user
+
+        mgrs:
+            hosts:
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+        osds:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+                c116:
+                    ansible_host: 192.168.1.116
+                c117:
+                    ansible_host: 192.168.1.117
+                c118:
+                    ansible_host: 192.168.1.118
+                c119:
+                    ansible_host: 192.168.1.119
+                c120:
+                    ansible_host: 192.168.1.120
+                c121:
+                    ansible_host: 192.168.1.121
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+        mdss:
+            hosts:
+                c109:
+                    ansible_host: 192.168.1.109
+                c110:
+                    ansible_host: 192.168.1.110
+                c111:
+                    ansible_host: 192.168.1.111
+                c112:
+                    ansible_host: 192.168.1.112
+                c113:
+                    ansible_host: 192.168.1.113
+                c114:
+                    ansible_host: 192.168.1.114
+                c115:
+                    ansible_host: 192.168.1.115
+            vars:
+                ansible_become: yes
+                ansible_user: user
+
+# 192.168.0.116 ansible_become=yes ansible_user=user
+
+        c01:
+            ansible_host: 192.168.0.101
+            ansible_become: yes
+            ansible_user: user   
+        c02:
+            ansible_host: 192.168.0.102
+            ansible_become: yes
+            ansible_user: user   
+        c03:
+            ansible_host: 192.168.0.103
+            ansible_become: yes
+            ansible_user: user   
+        c04:
+            ansible_host: 192.168.0.104
+            ansible_become: yes
+            ansible_user: user   
+        c05:
+            ansible_host: 192.168.0.105
+            ansible_become: yes
+            ansible_user: user   
+        c06:
+            ansible_host: 192.168.0.106
+            ansible_become: yes
+            ansible_user: user   
+        c07:
+            ansible_host: 192.168.0.107
+            ansible_become: yes
+            ansible_user: user   
+        c08:
+            ansible_host: 192.168.0.108
+            ansible_become: yes
+            ansible_user: user   
+
+        centos8:
+# 192.168.0.102 ansible_become=yes ansible_user=user
+# 192.168.0.103 ansible_become=yes ansible_user=user
+# 192.168.0.106 ansible_become=yes ansible_user=user
+
+        centos9:
+# 192.168.0.101 ansible_become=yes ansible_user=user
+# 192.168.0.104 ansible_become=yes ansible_user=user
+# 192.168.0.105 ansible_become=yes ansible_user=user
+# 192.168.0.107 ansible_become=yes ansible_user=user
+# 192.168.0.108 ansible_become=yes ansible_user=user
+
+# Ex 1: Ungrouped hosts, specify before any group headers:
+
+## green.example.com
+## blue.example.com
+## 192.168.100.1
+## 192.168.100.10
+
+# Ex 2: A collection of hosts belonging to the 'webservers' group:
+
+## [webservers]
+## alpha.example.org
+## beta.example.org
+## 192.168.1.100
+## 192.168.1.110
+
+# If you have multiple hosts following a pattern, you can specify
+# them like this:
+
+## www[001:006].example.com
+
+# You can also use ranges for multiple hosts: 
+
+## db-[99:101]-node.example.com
+
+# Ex 3: A collection of database servers in the 'dbservers' group:
+
+## [dbservers]
+##
+## db01.intranet.mydomain.net
+## db02.intranet.mydomain.net
+## 10.25.1.56
+## 10.25.1.57
+
+
+# Ex4: Multiple hosts arranged into groups such as 'Debian' and 'openSUSE':
+
+## [Debian]
+## alpha.example.org
+## beta.example.org
+
+## [openSUSE]
+## green.example.com
+## blue.example.com
+
