@@ -13,7 +13,7 @@
     # NOTE: it is important to disable client installation on
     #       server, unless `galera__user: ` (default: admin)
     galera_install_client: false
-    galera_root_password: root
+    galera_root_password: ##
 
 - name: Install Galera client
   hosts: c111
@@ -22,4 +22,4 @@
   vars:
     galera_install_server: false
     galera_install_client: true
-    galera_root_password: root
+    galera_root_password: ##
