@@ -3,7 +3,8 @@ working:
           ntp,
           wake,
           netradio,
-          timezone
+          timezone,
+          galera_server
           
 not-yet:
 --------
