@@ -69,7 +69,7 @@ galera_architecture_mapping: "{{ _galera_architecture_mapping }}"
 galera_gpg_keys: "{{ _galera_gpg_keys | default([]) }}"
 
 galera_monitoring_user: monitor
-galera_monitoring_user_password: "monitor"
+galera_monitoring_user_password: "#"
 galera_monitoring_port: 3307
 galera_monitoring_max_connections: 10
 
