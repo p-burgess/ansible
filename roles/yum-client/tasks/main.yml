@@ -7,7 +7,7 @@
   yum: name={{ yum_pkgs }} state=installed
   when: ansible_os_family == 'CentOS'
 
-- name: Create a backup confiuration directory
+- name: Create a backup repo configuration directory
   ansible.builtin.file:
     path: "{{ backup_dir }}"
     state: directory
