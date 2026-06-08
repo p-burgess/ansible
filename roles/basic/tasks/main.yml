@@ -2,5 +2,5 @@
 - hosts: all
   tasks:
         name: stop postfix
-        - service: name=postfix state=stopped enabled=no
+        - service: name=postfix state=absent enabled=no
         
