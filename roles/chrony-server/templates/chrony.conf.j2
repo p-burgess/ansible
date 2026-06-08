@@ -2,7 +2,7 @@
 
 driftfile {{ chrony_driftfile }}
 {% for i in chrony_server %}
-server {{ i }}
+server {{ i }} iburst
 {% endfor %}
 
 {% if chrony_minsources %}
