@@ -1,5 +1,5 @@
 ---
-yum_user: yum
+yum_user: nginx
 yum_pkgs:
   - createrepo
   - nginx
