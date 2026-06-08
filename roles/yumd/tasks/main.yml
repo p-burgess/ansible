@@ -56,8 +56,24 @@
     permissions: rwx
     state: present
 
+# Create shell script to update repos
+#
+# Template
+##!/bin/bash
+#VER='10'
+#ARCH='x86_64'
+#REPOS=(appstream baseos extras-common centos-ceph-tentacle crb MariaDB epel centos-nfv-openvswitch centos-messaging-rabbitmq-4)
+#for REPO in ${REPOS[@]}
+#do
+#reposync -p /var/www/html/repos/10/ --repo=${REPO} --download-metadata --newest-only
+#done
+#chown nginx:nginx -R /var/www/html/repos/10
+#systemctl restart ngin
+#
+
 - name: add cron job to sync repos weekly
-  cron:
+# Add shell script to cron - instead of this...
+cron:
     name: "reposync {{ item.name }}"
     special_time: "weekly"
     job: "reposync -q -n -d -p {{ yum_dir }} --repoid={{ item }} --download-metadata --downloadcomps"
