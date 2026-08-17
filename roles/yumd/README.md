@@ -1,4 +1,4 @@
-ntp
+yum
 ===
 
 This role configures a yum repo server,
