@@ -6,12 +6,12 @@ yum_pkgs:
   - yum-utils
 yum_source:
   - name: baseos
-    description: CentOS-7 Base
+    description: CentOS-10 Base
   - name: appstream
-    description: CentOS-9 AppStream
+    description: CentOS-10 AppStream
   - name: epel
-    description: CentOS-9 EPEL
+    description: CentOS-10 EPEL
   - name: extras-common
-    description: CentOS-9 extras  
+    description: CentOS-10 extras  
 
 ...
