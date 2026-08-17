@@ -91,7 +91,7 @@ cron:
     dest: /etc/nginx/nginx.conf
   notify: restart nginx
 
-- name: set SELinux to enforcing
+- name: set SELinux to disabled
   selinux:
     policy: targeted
     state: disabled
