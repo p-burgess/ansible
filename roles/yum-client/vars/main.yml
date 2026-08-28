@@ -18,7 +18,7 @@ yum_repos:
     enabled: 1
   - filename: epel.repo
     name: epel
-    baseurl: $baseurl//epel
+    baseurl: $baseurl/epel
     gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
     gpgcheck: 0
     enabled: 1
