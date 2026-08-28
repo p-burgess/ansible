@@ -88,7 +88,7 @@ cron:
 - name: configure nginx default site to run as yum user
   template:
     src: yum_nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
+    dest: /etc/nginx/conf.d/yum10.conf
   notify: restart nginx
 
 - name: set SELinux to disabled
