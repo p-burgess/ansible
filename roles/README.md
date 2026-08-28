@@ -5,6 +5,8 @@ working:
           netradio,
           timezone,
           galera_server
+          yumd
+          yum-client
           
 not-yet:
 --------
