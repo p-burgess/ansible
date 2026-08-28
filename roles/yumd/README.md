@@ -2,7 +2,7 @@ yum
 ===
 
 This role configures a yum repo server,
-running as the user yum on a host.
+running as the user nginx on a host.
 
 Requirements
 ------------
