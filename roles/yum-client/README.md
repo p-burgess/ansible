@@ -15,6 +15,13 @@ Role Variables
 The variables that can be passed to this role and a brief description about
 them are as follows. See the YUM configuration documentation for details:
 
+  - filename: ###.repo
+    name: 		directory name
+    baseurl: 	location
+    gpgkey: 	key file
+    gpgcheck: 	(enable/disable)
+    enabled: 	(enable/disable)
+
 Examples
 --------
 
