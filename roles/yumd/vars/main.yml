@@ -5,9 +5,9 @@ yum_pkgs:
   - nginx
   - yum-utils
 yum_source:
-  - name: baseos
+  - name: Baseos
     description: CentOS-10 Base
-  - name: appstream
+  - name: AppStream
     description: CentOS-10 AppStream
   - name: epel
     description: CentOS-10 EPEL
