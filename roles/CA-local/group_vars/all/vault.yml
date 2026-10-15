@@ -1,0 +1,17 @@
+---
+# Secrets for all hosts, encrypted inline with ansible-vault.
+#
+# Generate each value (paste the output over the matching block below):
+#   ansible-vault encrypt_string --name ownca_ca_cert < files/enenet-ca.crt
+#   ansible-vault encrypt_string --name ownca_ca_key  < files/enenet-ca.key
+#
+# Run playbooks with --ask-vault-pass (or --vault-password-file / vault_password_file in ansible.cfg).
+
+ownca_ca_cert: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ###
+         
+
+ownca_ca_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ###

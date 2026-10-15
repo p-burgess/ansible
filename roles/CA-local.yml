@@ -1,0 +1,39 @@
+---
+# Issue host certificates from the enenet CA and trust the CA on every host.
+#
+# Every host's certificate gets:
+#   CN  = inventory_hostname
+#   SAN = DNS:<short name>, DNS:<short name>.<cert_domain>, IP:<ansible_host>
+#         + anything listed for that host in cert_extra_san
+#
+# The CA itself (ownca_ca_cert / ownca_ca_key) comes from the vault-encrypted
+# group_vars/all/vault.yml, so run with --ask-vault-pass:
+#   ansible-playbook -i hosts.yml roles/CA-playbook.yml --ask-vault-pass
+
+- name: CA server
+  hosts: ca_server
+  become: true
+  vars: &ca_vars
+    cert_domain: local.lan
+
+    # Extra SAN entries, keyed by inventory hostname
+    cert_extra_san:
+      c111:
+        - DNS:grafana.local.lan
+        - DNS:repo.local.lan
+
+    ownca_trust_ca: true
+    ownca_san: >-
+      {{ ['DNS:' ~ inventory_hostname,
+          'DNS:' ~ inventory_hostname ~ '.' ~ cert_domain,
+          'IP:' ~ ansible_host]
+         + cert_extra_san.get(inventory_hostname, []) }}
+  roles:
+    - CA-local
+
+- name: CA clients
+  hosts: ca_client
+  become: true
+  vars: *ca_vars
+  roles:
+    - CA-local

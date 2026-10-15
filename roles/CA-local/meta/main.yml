@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  namespace: wandansible
+  role_name: CA-enenet
+  author: WAND Network Research Group, modified by Paul Burgess for CentOS-9
+  description: Generate SSL certificate for a host from an internal CA
+
+  license: Apache-2.0
+
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - focal
+    - name: CentOS
+        - 9
+
+  galaxy_tags: []
+
+dependencies: []

@@ -1,0 +1,39 @@
+---
+ownca_generate_cert: true
+ownca_trust_ca: false
+
+ownca_ssl_dir: /etc/pki/tls/CA_enenet
+ownca_cert_file: "{{ ownca_ssl_dir }}/{{ inventory_hostname }}.cert"
+ownca_key_file: "{{ ownca_ssl_dir }}/{{ inventory_hostname }}.key"
+ownca_ca_filename: enenet-ca
+
+ownca_key_type: ECC
+ownca_key_curve: secp256r1
+ownca_key_size: ""
+
+ownca_not_after: +1825d
+ownca_early_renewal: +365d
+
+ownca_common_name: "{{ inventory_hostname }}"
+ownca_san:
+  - DNS:{{ ownca_common_name }}
+
+ownca_ca_cert: |
+  -----BEGIN CERTIFICATE-----
+  MIIBfjCCASOgAwIBAgIUCel7N6yk2ojo4qQWLcNwYVOsbd8wCgYIKoZIzj0EAwIw
+  FDESMBAGA1UEAwwJZW5lbmV0IFVLMB4XDTI2MTAxNDIwMTk1MFoXDTQxMTAxMDIw
+  MTk1MFowFDESMBAGA1UEAwwJZW5lbmV0IFVLMFkwEwYHKoZIzj0CAQYIKoZIzj0D
+  AQcDQgAEtVSSe2yu2uoPJ6TwWI+mRlLo5/wwnC8KR2AvWYiTh3xw8JX1Z5tLRlNH
+  pA5MZ/QImjH444C2ecAbDKDGnGKBTaNTMFEwHQYDVR0OBBYEFHdS3IM0M7Ci4sup
+  5WfweKgIlAmoMB8GA1UdIwQYMBaAFHdS3IM0M7Ci4sup5WfweKgIlAmoMA8GA1Ud
+  EwEB/wQFMAMBAf8wCgYIKoZIzj0EAwIDSQAwRgIhAOjvzZIA6LybUYCBF2L8FzjR
+  IgDrM0mMnoojQsf+lkesAiEAtJ5s8ATf38CxbgTtUXGH1YIR/aOY5nGjpc/OeRXU
+  nqc=
+  -----END CERTIFICATE-----
+
+ownca_ca_key: |
+  -----BEGIN EC PRIVATE KEY-----
+  MHcCAQEEIL68jMbao4zBxYJ/FOpmBFb3oeEjgerE6lbOpbBiT7gLoAoGCCqGSM49
+  AwEHoUQDQgAEtVSSe2yu2uoPJ6TwWI+mRlLo5/wwnC8KR2AvWYiTh3xw8JX1Z5tL
+  RlNHpA5MZ/QImjH444C2ecAbDKDGnGKBTQ==
+  -----END EC PRIVATE KEY-----
