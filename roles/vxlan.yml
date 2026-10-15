@@ -1,0 +1,181 @@
+---
+# Creates multicast VXLAN networks, each enslaved to its own Linux bridge,
+# plus standalone bridges with no ports and no IP.
+#
+# Bridge IP = <network prefix>.<last octet of that network's underlay interface IP>
+#   e.g. #### -> br-mgmnt 192.168.10.110/24  (vxlan10 on ###)
+#                br-stor  192.168.20.110/24  (vxlan20 on ###)
+#                br-vxlan 192.168.30.110/24  (vxlan30 on ###)
+#                br-lan   no IP              (vxlan40 on ###)
+#                lxcbr0   no IP, no ports
+#
+# Target: CentOS Stream / RHEL 8+ (NetworkManager + nmstate, firewalld)
+#
+# Usage:
+#   ansible-playbook -i hosts.yml roles/vxlan.yml
+#   ansible-playbook -i hosts.yml roles/vxlan.yml -e vxlan_hosts=####
+
+- hosts: vxlan_hosts
+  vars:
+    # network_state is applied through nmstate, which needs NetworkManager
+    network_provider: nm
+    # firewalld zone for the bridges, so overlay traffic is not filtered by
+    # the default 'public' zone; set to '' to leave bridge zones unchanged
+    vxlan_bridge_zone: trusted
+    vxlan_port: 4789
+    # VXLAN header adds 50 bytes; 1400 + 50 fits the 1500 underlay with headroom.
+    # Applied to each vxlan device and its bridge (bridge MTU must not exceed its port's)
+    vxlan_mtu: 1400
+    # Omit prefix for a bridge without an IP address
+    vxlan_networks:
+      - vni: 10
+        interface: ####
+        bridge: br-mgmnt
+        group: 239.1.1.10
+        prefix: 192.168.10
+      - vni: 20
+        interface: ####
+        bridge: br-stor
+        group: 239.1.1.20
+        prefix: 192.168.20
+      - vni: 30
+        interface: ####
+        bridge: br-vxlan
+        group: 239.1.1.30
+        prefix: 192.168.30
+      - vni: 40
+        interface: ####
+        bridge: br-lan
+        group: 239.1.1.40
+    # Bridges with no ports and no IP address
+    vxlan_standalone_bridges:
+      - lxcbr0
+
+    __vxlan_state: |
+      interfaces:
+      {% for net in vxlan_networks %}
+      {%   set local_ip = ansible_facts[net.interface | replace('-', '_')]['ipv4']['address'] %}
+        - name: vxlan{{ net.vni }}
+          type: vxlan
+          state: up
+          mtu: {{ vxlan_mtu }}
+          vxlan:
+            base-iface: {{ net.interface }}
+            id: {{ net.vni }}
+            remote: {{ net.group }}
+            local: {{ local_ip }}
+            destination-port: {{ vxlan_port }}
+          ipv4:
+            enabled: false
+          ipv6:
+            enabled: false
+        - name: {{ net.bridge }}
+          type: linux-bridge
+          state: up
+          mtu: {{ vxlan_mtu }}
+          bridge:
+            options:
+              stp:
+                enabled: false
+            port:
+              - name: vxlan{{ net.vni }}
+      {%   if net.prefix is defined %}
+          ipv4:
+            enabled: true
+            dhcp: false
+            address:
+              - ip: {{ net.prefix }}.{{ local_ip.split('.')[-1] }}
+                prefix-length: 24
+      {%   else %}
+          ipv4:
+            enabled: false
+      {%   endif %}
+          ipv6:
+            enabled: false
+      {% endfor %}
+      {% for br in vxlan_standalone_bridges %}
+        - name: {{ br }}
+          type: linux-bridge
+          state: up
+          bridge:
+            options:
+              stp:
+                enabled: false
+            port: []
+          ipv4:
+            enabled: false
+          ipv6:
+            enabled: false
+      {% endfor %}
+    network_state: "{{ __vxlan_state | from_yaml }}"
+
+  pre_tasks:
+    - name: Verify the host is CentOS/RHEL 8 or later
+      assert:
+        that:
+          - ansible_facts['distribution'] in ['CentOS', 'RedHat', 'Rocky', 'AlmaLinux']
+          - ansible_facts['distribution_major_version'] | int >= 8
+        fail_msg: "nmstate-based VXLAN config needs CentOS/RHEL 8+, found {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }}"
+
+    - name: Verify each underlay interface has an IPv4 address
+      assert:
+        that:
+          - (item | replace('-', '_')) in ansible_facts
+          - ansible_facts[item | replace('-', '_')]['ipv4']['address'] is defined
+        fail_msg: "Interface {{ item }} not found or has no IPv4 address"
+      loop: "{{ vxlan_networks | map(attribute='interface') | unique | list }}"
+
+    - name: Show planned bridges
+      debug:
+        msg: "{{ network_state.interfaces | selectattr('type', 'eq', 'linux-bridge') | map(attribute='name') | list }}"
+
+    - name: Gather service facts
+      service_facts:
+
+    - name: Check firewalld for VXLAN port and IGMP
+      command: "firewall-cmd --permanent --query-{{ item }}"
+      loop:
+        - "port={{ vxlan_port }}/udp"
+        - protocol=igmp
+      register: __vxlan_fw_query
+      changed_when: false
+      failed_when: __vxlan_fw_query.rc not in [0, 1]
+      when: ansible_facts.services['firewalld.service'].state | d('') == 'running'
+
+    # VXLAN encapsulated traffic arrives on UDP 4789; IGMP lets the host
+    # answer switch queries so multicast group membership is not aged out
+    - name: Allow VXLAN port and IGMP through firewalld
+      command: "firewall-cmd --permanent --add-{{ item.item }}"
+      loop: "{{ __vxlan_fw_query.results | d([]) }}"
+      when: item.rc | d(0) == 1
+      notify: Reload firewalld
+
+  roles:
+    - rhel-system-roles.network
+
+  tasks:
+    - name: Check firewalld zone of bridges
+      command: "nmcli -g connection.zone connection show {{ item }}"
+      loop: "{{ vxlan_networks | map(attribute='bridge') | list + vxlan_standalone_bridges }}"
+      register: __vxlan_zone
+      changed_when: false
+      when:
+        - vxlan_bridge_zone | length > 0
+        - ansible_facts.services['firewalld.service'].state | d('') == 'running'
+
+    - name: Assign bridges to firewalld zone
+      command: "nmcli connection modify {{ item.item }} connection.zone {{ vxlan_bridge_zone }}"
+      loop: "{{ __vxlan_zone.results | d([]) }}"
+      when:
+        - item.stdout is defined
+        - item.stdout != vxlan_bridge_zone
+      register: __vxlan_zone_set
+
+    - name: Reapply connection so the zone takes effect
+      command: "nmcli device reapply {{ item.item.item }}"
+      loop: "{{ __vxlan_zone_set.results | d([]) }}"
+      when: item is changed
+
+  handlers:
+    - name: Reload firewalld
+      command: firewall-cmd --reload
